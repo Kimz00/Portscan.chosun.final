@@ -1,0 +1,33 @@
+version: '3'
+services:
+  db:
+    image: mariadb:latest
+    volumes:
+      - "./db:/var/lib/mysql:rw"
+    environment:
+      - "MYSQL_DATABASE=hello"
+      - "MYSQL_USER=hello"
+      - "MYSQL_PASSWORD=hello"
+      - "MYSQL_ROOT_PASSWORD=root"
+    ports:
+      - "3306:3306"
+  
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    depends_on:
+    - db
+    environment:
+      - "PMA_HOST=db"
+      - "PMA_USER=root"
+      - "PMA_PASSWORD=root"
+  
+  web:
+    build: 
+      context: ./docker/web_server
+      dockerfile: Dockerfile
+    volumes:
+      - "./web:/var/www/html"
+    depends_on:
+      - db
+    ports:
+      - "80:80"
