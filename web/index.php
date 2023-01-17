@@ -153,16 +153,10 @@
             {
 <<<<<<< HEAD:index.php
                # $output = array();
-               if ($_POST['ip'] == "127.0.0.1"){
-                  $addr = gethostbyname(php_uname('n'));
-                  $ip_addr = $addr[0];
-               }
-               else{
-                  $ip_addr = $_POST['ip'];
-               }
-               $ip = preg_replace("/[^a-z0-9.-:]/i", "", $ip_addr);
+               require("./scan/checkip.php");
+               $ip_addr = get_client_ip();
 =======
-               $ip = preg_replace("/[^a-z0-9.-:]/i", "", $_POST['ip']);
+               $ip = preg_replace("/[^a-z0-9.-:]/i", "", $ip_addr);
 >>>>>>> 6671b3b64a5e504bf180f1e1031929dfe1757b56:web/index.php
                $min_port = $_POST['min_port'];
                $max_port = $_POST['max_port'];
