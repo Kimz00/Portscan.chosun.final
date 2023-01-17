@@ -152,7 +152,14 @@
             if(isset($_POST['submit']) && ($_SERVER['REQUEST_METHOD'] === 'POST'))
             {
                # $output = array();
-               $ip = preg_replace("/[^a-z0-9.-:]/i", "", $_POST['ip']);
+               if ($_POST['ip'] == "127.0.0.1"){
+                  $addr = gethostbyname(php_uname('n'));
+                  $ip_addr = $addr[0];
+               }
+               else{
+                  $ip_addr = $_POST['ip'];
+               }
+               $ip = preg_replace("/[^a-z0-9.-:]/i", "", $ip_addr);
                $min_port = $_POST['min_port'];
                $max_port = $_POST['max_port'];
                if(!empty($ip) && function_exists("socket_create"))
